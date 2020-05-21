@@ -1,9 +1,13 @@
 package com.stauffer.recipe.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 import com.stauffer.recipe.model.Category;
 
-public interface CategoryRepository extends CrudRepository<Category, Long>{
+public interface CategoryRepository extends CrudRepository<Category, Long> {
+
+	Optional<Category> findByDescription(String Description);
 
 }
