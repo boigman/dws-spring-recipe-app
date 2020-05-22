@@ -3,34 +3,29 @@ package com.stauffer.recipe.controllers;
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.stauffer.recipe.model.Category;
 import com.stauffer.recipe.model.UnitOfMeasurement;
-import com.stauffer.recipe.repositories.CategoryRepository;
-import com.stauffer.recipe.repositories.UnitOfMeasurementRepository;
+import com.stauffer.recipe.services.RecipeService;
 
 @Controller
 public class IndexController {
 	
-	private CategoryRepository categoryRepository;
-	private UnitOfMeasurementRepository unitOfMeasurementRepository;
-	
+	private final RecipeService recipeService;
 
-	public IndexController(CategoryRepository categoryRepository,
-			UnitOfMeasurementRepository unitOfMeasurementRepository) {
-		this.categoryRepository = categoryRepository;
-		this.unitOfMeasurementRepository = unitOfMeasurementRepository;
+
+	public IndexController(RecipeService recipeService) {
+		super();
+		this.recipeService = recipeService;
 	}
 
 
 	@RequestMapping({"","/","index"})
-	public String getIndexPage() {
+	public String getIndexPage(Model model) {
 		
-		Optional<Category> optCategory = categoryRepository.findByDescription("Side Dishes");
-		Optional<UnitOfMeasurement> optUOM = unitOfMeasurementRepository.findByDescription("Teaspoon");
-		System.out.println("Category ID is: "+optCategory.get().getId());
-		System.out.println("UOM ID is: "+optUOM.get().getId());
+		model.addAttribute("recipes",recipeService.getRecipes());
 		return "index";
 	}
 }

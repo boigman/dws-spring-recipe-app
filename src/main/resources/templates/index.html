@@ -2,11 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1"/>
-<title>My Recipes</title>
+<title>Recipe Home</title>
 	<h1>My Recipes!</h1>
 </head>
 
 <body>
-
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Description</th>
+		</tr>
+		<tr th:each="recipe : ${recipes}">
+			<td th:text="${recipe.id}"></td>
+			<td th:text="${recipe.description}">Tasty Goodness</td>
+		
+		</tr>
+		
+	</table>
 </body>
 </html>
