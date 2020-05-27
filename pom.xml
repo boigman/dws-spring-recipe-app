@@ -12,6 +12,7 @@
 	<artifactId>spring-recipes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-recipes</name>
+	<packaging>pom</packaging> <!-- -->	
 	<description>Spring Boot Recipe Project</description>
 
 	<properties>
@@ -69,4 +70,8 @@
 		</plugins>
 	</build>
 
+	<modules>
+		<module>recipe-data</module>
+		<module>recipe-web</module>
+	</modules>
 </project>

@@ -1,20 +1,21 @@
 package com.stauffer.recipe.model;
 
-import java.util.Set;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Category {
-
+public class UnitOfMeasurement {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String description;
-	
-	@ManyToMany(mappedBy="categories")
-	private Set<Recipe> recipes;
-	
+
+	@OneToOne
+	private Ingredient ingredient;
 	
 	public Long getId() {
 		return id;
@@ -28,12 +29,12 @@ public class Category {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Set<Recipe> getRecipes() {
-		return recipes;
+	public Ingredient getIngredient() {
+		return ingredient;
 	}
-	public void setRecipes(Set<Recipe> recipes) {
-		this.recipes = recipes;
+	public void setIngredient(Ingredient ingredient) {
+		this.ingredient = ingredient;
 	}
-	
+
 	
 }

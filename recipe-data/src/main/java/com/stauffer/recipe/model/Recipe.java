@@ -17,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.stauffer.recipe.model.Difficulty;
+
 @Entity
 public class Recipe {
 	@Id

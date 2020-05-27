@@ -13,27 +13,29 @@ import com.stauffer.recipe.model.Category;
 import com.stauffer.recipe.model.Difficulty;
 import com.stauffer.recipe.model.Ingredient;
 import com.stauffer.recipe.model.Notes;
+import com.stauffer.recipe.model.Owner;
 import com.stauffer.recipe.model.Recipe;
 import com.stauffer.recipe.model.UnitOfMeasurement;
 import com.stauffer.recipe.repositories.CategoryRepository;
 import com.stauffer.recipe.repositories.RecipeRepository;
 import com.stauffer.recipe.repositories.UnitOfMeasurementRepository;
+import com.stauffer.recipe.services.OwnerService;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
+//@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent>{
 	
+	private final OwnerService ownerService;
 	private final CategoryRepository catRepository;
 	private final RecipeRepository recipeRepository;
 	private final UnitOfMeasurementRepository uomRepository;
-
-	
 	
 
-	public RecipeBootstrap(CategoryRepository catRepository, RecipeRepository recipeRepository,
+	public RecipeBootstrap(OwnerService ownerService, CategoryRepository catRepository, RecipeRepository recipeRepository,
 			UnitOfMeasurementRepository uomRepository) {
+		this.ownerService = ownerService;
 		this.catRepository = catRepository;
 		this.recipeRepository = recipeRepository;
 		this.uomRepository = uomRepository;
@@ -45,6 +47,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 //    @Transactional
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		// TODO Auto-generated method stub
+		System.out.println("Welcome from RecipeBootstrap!");
         recipeRepository.saveAll(getRecipes());
 //        log.debug("Loading Bootstrap Data");
 		
@@ -53,6 +56,32 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 	private List<Recipe> getRecipes() {
 		List<Recipe> recipes = new ArrayList<>(2);
 		
+		Category amerOptCat = new Category();
+		amerOptCat.setDescription("American");
+		catRepository.save(amerOptCat);
+		Category maxOptCat = new Category();
+		maxOptCat.setDescription("Mexican");
+		catRepository.save(maxOptCat);
+		
+		UnitOfMeasurement dashOptUom = new UnitOfMeasurement();
+		dashOptUom.setDescription("Dash");
+		uomRepository.save(dashOptUom);
+		UnitOfMeasurement eachOptUom = new UnitOfMeasurement();
+		eachOptUom.setDescription("Each");
+		uomRepository.save(eachOptUom);
+		UnitOfMeasurement cupOptUom = new UnitOfMeasurement();
+		cupOptUom.setDescription("Cup");
+		uomRepository.save(cupOptUom);
+		UnitOfMeasurement pintOptUom = new UnitOfMeasurement();
+		pintOptUom.setDescription("Pint");
+		uomRepository.save(pintOptUom);
+		UnitOfMeasurement tspOptUom = new UnitOfMeasurement();
+		tspOptUom.setDescription("Teaspoon");
+		uomRepository.save(tspOptUom);
+		UnitOfMeasurement tbspOptUom = new UnitOfMeasurement();
+		tbspOptUom.setDescription("Tablespoon");
+		uomRepository.save(tbspOptUom);
+
 		Optional<UnitOfMeasurement> dashUomOptional = uomRepository.findByDescription("Dash");
 		if(!dashUomOptional.isPresent()) {
 			throw new RuntimeException("Expected UOM not Found");
@@ -77,6 +106,23 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		if(!tbspUomOptional.isPresent()) {
 			throw new RuntimeException("Expected UOM not Found");
 		}
+		
+		Owner owner1 = new Owner();
+		owner1.setFirstName("Michael");
+		owner1.setLastName("Weston");
+		owner1.setAddress("123 Anytown Drive");
+		owner1.setCity("Anytown");
+		owner1.setTelephone("313-255-4972");
+		ownerService.save(owner1);
+
+		Owner owner2 = new Owner();
+		owner2.setFirstName("Fiona");
+		owner2.setLastName("Glenanne");
+		owner2.setAddress("456 Squaresville Drive");
+		owner2.setCity("Squaresville");
+		owner2.setTelephone("313-255-4973");
+		ownerService.save(owner2);
+		
 		
 		UnitOfMeasurement dashUom = dashUomOptional.get();
 		UnitOfMeasurement eachUom = eachUomOptional.get();
