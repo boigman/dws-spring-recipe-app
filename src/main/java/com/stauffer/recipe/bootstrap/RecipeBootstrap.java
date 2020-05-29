@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.stauffer.recipe.model.Category;
 import com.stauffer.recipe.model.Difficulty;
@@ -22,6 +23,7 @@ import com.stauffer.recipe.repositories.UnitOfMeasurementRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Transactional
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent>{
 	
@@ -46,7 +48,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		// TODO Auto-generated method stub
         recipeRepository.saveAll(getRecipes());
-//        log.debug("Loading Bootstrap Data");
+        log.debug("Loading Bootstrap Data");
 		
 	}
 	

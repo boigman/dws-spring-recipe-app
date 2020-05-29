@@ -10,7 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data
+@NoArgsConstructor
 public class Ingredient {
 	
 	@Id
@@ -23,15 +28,8 @@ public class Ingredient {
 	@OneToOne(fetch=FetchType.EAGER)
 	private UnitOfMeasurement uom;
 	
-	//private UnitofMeasurement uom;
-	
 	@ManyToOne
 	private Recipe recipe;
-	
-	
-
-	public Ingredient() {
-	}
 
 	public Ingredient(String description, BigDecimal amount, UnitOfMeasurement uom) {
 		this.description = description;
@@ -44,46 +42,6 @@ public class Ingredient {
 		this.amount = amount;
 		this.uom = uom;
 		this.recipe = recipe;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
-	}
-
-	public Recipe getRecipe() {
-		return recipe;
-	}
-
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
-	}
-
-	public UnitOfMeasurement getUom() {
-		return uom;
-	}
-
-	public void setUom(UnitOfMeasurement uom) {
-		this.uom = uom;
 	}
 
 	

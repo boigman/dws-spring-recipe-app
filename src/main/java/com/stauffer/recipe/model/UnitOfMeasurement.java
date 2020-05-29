@@ -1,8 +1,14 @@
 package com.stauffer.recipe.model;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Getter @Setter
 public class UnitOfMeasurement {
 	
 	@Id
@@ -12,25 +18,5 @@ public class UnitOfMeasurement {
 
 	@OneToOne
 	private Ingredient ingredient;
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public Ingredient getIngredient() {
-		return ingredient;
-	}
-	public void setIngredient(Ingredient ingredient) {
-		this.ingredient = ingredient;
-	}
-
 	
 }
