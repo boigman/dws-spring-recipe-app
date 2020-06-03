@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+ 			<scope>test</scope>	 <!-- -->
 			<exclusions>
 				<exclusion>
 					<groupId>org.junit.vintage</groupId>
@@ -59,6 +59,7 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 	</dependencies>
+	
 
 	<build>
 		<plugins>

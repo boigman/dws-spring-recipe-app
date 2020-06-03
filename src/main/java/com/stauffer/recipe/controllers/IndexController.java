@@ -7,9 +7,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.stauffer.recipe.model.Category;
-import com.stauffer.recipe.model.UnitOfMeasurement;
+import com.stauffer.recipe.model.UnitOfMeasure;
 import com.stauffer.recipe.services.RecipeService;
 import com.stauffer.recipe.services.RecipeServiceImpl;
+
+import static org.junit.Assert.assertEquals;
+//import static org.mockito.Mockito.*;
+//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
 
 import lombok.extern.slf4j.Slf4j;
 

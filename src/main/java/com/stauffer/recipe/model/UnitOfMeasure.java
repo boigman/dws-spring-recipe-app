@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class UnitOfMeasurement {
+public class UnitOfMeasure {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
