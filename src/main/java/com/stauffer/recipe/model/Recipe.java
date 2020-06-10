@@ -45,7 +45,7 @@ public class Recipe {
 	
 	
 	//TODO add
-	//private Difficulty difficulty;
+//	private Difficulty difficulty;
 	
 	@Lob
 	private Byte[] image;
@@ -66,5 +66,7 @@ public class Recipe {
 		this.ingredients.add(ingredient);
 	}
 	
-
+	public String[] directionLines() {
+		return directions.split("\r\n|\r|\n");
+	}
 }
