@@ -28,7 +28,7 @@ public class Ingredient {
 	private Long id;
 	
 	private String description;
-	@Column(columnDefinition="decimal", precision=10, scale=5)
+	@Column(precision=10, scale=4)
 	private BigDecimal amount;
 	
 	@OneToOne(fetch=FetchType.EAGER)
