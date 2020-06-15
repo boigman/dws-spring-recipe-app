@@ -1,6 +1,8 @@
 package com.stauffer.recipe.controllers;
 
 import com.stauffer.recipe.commands.IngredientCommand;
+import com.stauffer.recipe.commands.RecipeCommand;
+import com.stauffer.recipe.commands.UnitOfMeasureCommand;
 import com.stauffer.recipe.services.IngredientService;
 import com.stauffer.recipe.services.RecipeService;
 import com.stauffer.recipe.services.UnitOfMeasureService;
@@ -52,6 +54,19 @@ public class IngredientController {
     }
 
     @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/new")
+    public String newRecipeIngredient(@PathVariable String recipeId, Model model){
+    	RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+    	// todo raise exception if null;
+    	IngredientCommand ingredientCommand = new IngredientCommand();
+    	ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+        return "recipe/ingredient/ingredientform";
+    }
+
+    @GetMapping
     @RequestMapping("recipe/{recipeId}/ingredient/{id}/update")
     public String updateRecipeIngredient(@PathVariable String recipeId,
                                          @PathVariable String id, Model model){
@@ -59,6 +74,16 @@ public class IngredientController {
 
         model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
         return "recipe/ingredient/ingredientform";
+    }
+
+    @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/{id}/delete")
+    public String deleteRecipeIngredient(@PathVariable String recipeId,
+                                         @PathVariable String id, Model model){
+    	ingredientService.deleteById(Long.valueOf(recipeId), Long.valueOf(id));
+
+        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+        return "redirect:/recipe/" + recipeId + "/ingredients";
     }
 
     @PostMapping("recipe/{recipeId}/ingredient")

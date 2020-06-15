@@ -16,10 +16,13 @@ import org.thymeleaf.util.StringUtils;
 import com.stauffer.recipe.utilities.Rational;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Ingredient {
 	

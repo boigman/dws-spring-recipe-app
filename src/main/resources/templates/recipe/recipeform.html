@@ -65,10 +65,14 @@
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Difficulty:</label>
-                                    <select class="form-control">
-                                        <option>Easy</option>
-                                        <option>Medium</option>
-                                        <option>Hard</option>
+                                    <select class="form-control" th:field="*{difficulty}">
+                                        <option th:remove="all">Easy</option>
+                                        <option th:remove="all">Medium</option>
+                                        <option th:remove="all">Hard</option>
+                                        <option th:each="diffValue : ${T(com.stauffer.recipe.model.Difficulty).values()}"
+                                        	th:value="${diffValue.name()}"
+                                        	th:text="${diffValue.name()}"
+                                        >Hard</option>
                                     </select>
                                 </div>
                             </div>
