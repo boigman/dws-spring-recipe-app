@@ -1,14 +1,5 @@
 package com.stauffer.recipe.controllers;
 
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
@@ -16,13 +7,28 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+//import org.aspectj.lang.annotation.Before;
 
 import com.stauffer.recipe.commands.RecipeCommand;
 import com.stauffer.recipe.exceptions.NotFoundException;
 import com.stauffer.recipe.model.Recipe;
 import com.stauffer.recipe.services.RecipeService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class RecipeControllerTest {
 
     @Mock
@@ -32,12 +38,15 @@ public class RecipeControllerTest {
 
     MockMvc mockMvc;
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        log.debug("I'm in the Setup now");
 
         controller = new RecipeController(recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new ControllerExceptionHandler())
+                .build();
     }
 
     @Test
@@ -61,7 +70,7 @@ public class RecipeControllerTest {
 
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isNotFound())
-                .andExpect(view().name("404error"));
+                .andExpect(view().name("recipe/404error"));
                 ;
     }
     
@@ -71,7 +80,7 @@ public class RecipeControllerTest {
 //        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
 
         mockMvc.perform(get("/recipe/asdf/show"))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andExpect(view().name("400error"));
                 ;
     }
@@ -80,7 +89,8 @@ public class RecipeControllerTest {
     public void testGetNewRecipeForm() throws Exception {
         RecipeCommand command = new RecipeCommand();
 
-        mockMvc.perform(get("/recipe/new"))
+        log.debug("I'm in testGetNewRecipeForm now");
+       mockMvc.perform(get("/recipe/new"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/recipeform"))
                 .andExpect(model().attributeExists("recipe"));

@@ -19,8 +19,8 @@ import com.stauffer.recipe.exceptions.NotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Service
 @Slf4j
+@Service
 public class RecipeServiceImpl implements RecipeService{
 	
 	private final RecipeRepository recipeRepository;

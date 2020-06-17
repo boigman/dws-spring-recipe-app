@@ -6,8 +6,8 @@ import com.stauffer.recipe.model.Recipe;
 import com.stauffer.recipe.commands.RecipeCommand;
 
 public interface RecipeService {
+
 	Set<Recipe> getRecipes();
-	
 
 	Recipe findById(Long l);
 	
