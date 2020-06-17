@@ -9,7 +9,7 @@ public interface RecipeService {
 	Set<Recipe> getRecipes();
 	
 
-	Recipe findById(long l);
+	Recipe findById(Long l);
 	
     RecipeCommand findCommandById(Long l);
 

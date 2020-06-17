@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.stauffer.recipe.commands.RecipeCommand;
+import com.stauffer.recipe.exceptions.NotFoundException;
 import com.stauffer.recipe.model.Recipe;
 import com.stauffer.recipe.services.RecipeService;
 
@@ -53,6 +54,28 @@ public class RecipeControllerTest {
                 .andExpect(model().attributeExists("recipe"));
     }
 
+    @Test
+    public void testGetRecipeNotFound() throws Exception {
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
+                ;
+    }
+    
+    @Test
+    public void testGetRecipeNumberFormatException() throws Exception {
+
+//        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/asdf/show"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("400error"));
+                ;
+    }
+    
     @Test
     public void testGetNewRecipeForm() throws Exception {
         RecipeCommand command = new RecipeCommand();

@@ -15,6 +15,7 @@ import com.stauffer.recipe.model.Recipe;
 import com.stauffer.recipe.repositories.RecipeRepository;
 import com.stauffer.recipe.converters.RecipeCommandToRecipe;
 import com.stauffer.recipe.converters.RecipeToRecipeCommand;
+import com.stauffer.recipe.exceptions.NotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,10 +44,11 @@ public class RecipeServiceImpl implements RecipeService{
 	}
 	
 	@Override
-	public Recipe findById(long l) {
+	public Recipe findById(Long l) {
 		Optional<Recipe> recipeOptional = recipeRepository.findById(l);
 		if (!recipeOptional.isPresent()) {
-			throw new RuntimeException("Recipe Not Found!");
+//			throw new RuntimeException("Recipe Not Found!");
+			throw new NotFoundException("Recipe Not Found for ID value: "+ l.toString());
 		}
 		return recipeOptional.get();
 	}
